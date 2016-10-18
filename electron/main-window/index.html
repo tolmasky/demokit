@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>DemoKit</title>
+
+        <!-- Photon.css -->
+        <link rel="stylesheet" href="dist/css/photon.min.css">
+        <link rel="stylesheet" href="dist/css/window-buttons.css">
+
+        <style>
+            .vertical-dimmer
+            {
+                padding:0;
+                margin:0;
+                flex-grow:0;
+                flex-shrink:0;
+                width:100%;
+                background:red;
+            }
+
+            .horizontal-dimmer
+            {
+                padding:0;
+                margin:0;
+                flex-grow:1;
+                max-height:800px;
+                background:green;
+            }
+
+            body
+            {
+                margin:0;
+                padding: 0;
+            }
+
+            .dimmer
+            {
+                position: absolute;
+                background: rgba(1,1,1,0.5);
+                z-index: 2;
+            }
+
+            body > header
+            {
+                width: 100vw;
+                height: calc((100vh - 800px)/2);
+                left:0;
+                top:0;
+            }
+
+            body > footer
+            {
+                width: 100vw;
+                height: calc((100vh - 800px)/2);
+                left:0;
+                bottom:0;
+            }
+
+            body > aside
+            {
+                width: calc((100vw - 500px)/2);
+                height: 800px;
+                left:0;
+                top:calc((100vh - 800px)/2);
+            }
+
+            .right
+            {
+                left:initial;
+                right:0;
+            }
+
+            #scene
+            {
+                position:absolute;
+                top:calc((100vh - 800px)/2);
+                left:calc((100vw - 500px)/2);
+                background:white;
+                width: 500px;
+                height: 800px;
+            }
+
+        </style>
+
+    </head>
+
+    <body style = "position:relative; background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAADZJREFUOBFjvHHjxn8GPEBdXR2PLAMDE15ZIiRHDRgMgcj4Hwjwxdbt27fxSY+mA2DoDIOkDABJFQqoM3ZTDwAAAABJRU5ErkJggg==);">
+
+        <div id = "instantiation" style = "display:none"></div>
+
+        <div id = "scene">
+        </div>
+
+        <header class = "dimmer" ></header>
+        <aside class = "dimmer left"></aside>
+        <aside class = "dimmer right"></aside>
+        <footer class = "dimmer" ></footer>
+
+        <div id = "cursor" style = "background-size: cover; opacity:1; pointer-events: none; position:absolute; left:100px; top: 100px; z-index:1000000;" ></div>
+
+  <script>
+
+    const { ipcRenderer } = require("electron");
+    const send = ipcRenderer.send.bind(ipcRenderer);
+    const on = ipcRenderer.on.bind(ipcRenderer);
+
+    on("execute", function (event, uuid, script, args)
+    {
+        new Promise(function (resolve, reject)
+            {
+                eval(script).apply(this, args.concat(resolve, reject));
+            })
+            .then(function resolve(anArgument)
+            {
+                send("execute-resolve", uuid, anArgument);
+            })
+            .catch(function reject(anException)
+            {
+                if (anException instanceof Error)
+                    send("execute-reject", uuid, { message: anException.message, stack: anException.stack, script: anException.script || script });
+                else
+                    send("execute-reject", uuid, anException);
+            });
+    });
+
+    send("ready");
+    // You can also require other files to run in this process
+  </script>
+    </body>
+</html>
+
+
+
+

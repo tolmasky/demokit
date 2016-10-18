@@ -1,0 +1,45 @@
+{
+  "name": "demokit",
+  "version": "1.0.0",
+  "description": "Beautiful Demos with JSX",
+  "main": "main.js",
+  "scripts": {
+    "start": "npm run-script build-with-abi && electron .",
+    "build-demokit": "cd demokit && npm install --runtime=electron --target=1.4.3 --disturl=https://atom.io/download/atom-shell --abi=50",
+    "build-electron": "npm install --runtime=electron --target=1.4.3 --disturl=https://atom.io/download/atom-shell --abi=50",
+    "build-with-abi": "npm run-script build-demokit && npm install --runtime=electron --target=1.4.3 --disturl=https://atom.io/download/atom-shell --abi=50",
+    "build-with-abi-good": "npm install --runtime=electron --target=1.4.3 --disturl=https://atom.io/download/atom-shell --abi=50 && cd demokit && npm install --runtime=electron --target=1.4.3 --disturl=https://atom.io/download/atom-shell --abi=50",
+    "build": "npm run-script build-with-abi",
+    "deploy-old": "npm run-script build-with-abi && electron-packager . DemoKitApp --overwrite --platform=darwin --arch=x64"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/njudah/demokit"
+  },
+  "keywords": [],
+  "author": "RunKit",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/njudah/demokit/issues"
+  },
+  "homepage": "https://github.com/njudah/demokit#readme",
+  "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015-node6": "^0.3.0",
+    "babel-preset-stage-3": "^6.11.0",
+    "babel-register": "^6.14.0",
+    "bluebird": "^3.4.6",
+    "expand-tilde": "^1.2.2",
+    "generic-jsx": "9.0.0",
+    "moment": "^2.14.1",
+    "ramda": "^0.22.1",
+    "screen-recorder": "pouwerkerk/screen-recorder",
+    "uuid": "^2.0.2",
+    "electron": "1.4.3"
+  },
+  "devDependencies": {
+    "electron-packager": "^8.0.0",
+    "electron-rebuild": "^1.2.1"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "demokit",
+  "version": "1.0.0",
+  "description": "DemoKit is an Library and Electron app for building product demos and tutorials using web technologies",
+  "main": "main.js",
+  "bin": {
+    "demokit": "./bin/demokit-cli.js"
+  },
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/runkitdev/demokit"
+  },
+  "keywords": ["video", "demos", "tutorials", "authoring"],
+  "author": "RunKit",
+  "contributors": [
+    {
+      "name": "Francisco Tolmasky",
+      "email": "tolmasky@gmail.com",
+      "web": "http://tolmasky.com"
+    },
+    {
+      "name": "Pieter Ouwerkerk",
+      "email": "pieter.ouwerkerk@gmail.com",
+      "web": "http://www.pieter.is"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/runkitdev/demokit/issues"
+  },
+  "homepage": "https://github.com/runkitdev/demokit#readme",
+  "dependencies": {
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "demokit",
+  "version": "1.0.0",
+  "description": "Script Product Demos with JSX.",
+  "main": "./demokit.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "screen",
+    "recording",
+    "demo"
+  ],
+  "author": {
+    "name": "Francisco Ryan Tolmasky I",
+    "email": "tolmasky@gmail.com",
+    "url": "http://tolmasky.com/"
+  },
+  "contributors": [
+    {
+      "name": "Francisco Ryan Tolmasky I",
+      "email": "tolmasky@gmail.com",
+      "url": "http://tolmasky.com/"
+    },
+    {
+      "name": "Pieter Ouwerkerk",
+      "email": "pieter.ouwerkerk@gmail.com",
+      "url": "http://github.com/pouwerkerk"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bindings": "^1.2.1",
+    "nan": "^2.4.0"
+  }
+}

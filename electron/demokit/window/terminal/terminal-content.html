@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <style>
+            body
+            {
+                background:black;
+                color:white;
+                font:14px 'Menlo';
+                padding:3px 5px;
+                line-height: 20px;
+                margin: 0;
+            }
+            
+            #cursor
+            {
+                height: 20px;
+                background:white;
+                display: inline-block;
+                margin-left:1px;
+                top:-4px;
+                line-height:14px;
+                position:relative;
+            }
+            
+            #content
+            {
+                white-space: pre;
+            }
+            
+            #capture
+            {
+                position: absolute;
+                left:-10000px;
+                top:-10000px;
+            }
+        </style>
+        <script>
+            function onChange()
+            {
+                document.getElementById("content").innerText = "$ " + document.getElementById("capture").value;
+            }
+            
+            function focus()
+            {
+                document.getElementById("capture").focus();
+            }
+            
+            window.onfocus = focus;
+        </script>
+    </head>
+    <body onfocus = "focus()" onload = "focus()" tabindex = "0">
+        <textarea id = "capture" oninput = "onChange()" onblur = "focus()" ></textarea>
+        <span id = "content" onfocus = "focus()">$ </span><span id = "cursor">&nbsp;</span>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="./codemirror-5.18.2/lib/codemirror.js"></script>
+        <link rel="stylesheet" href="./codemirror-5.18.2/lib/codemirror.css">
+        <script src="./codemirror-5.18.2/mode/css/css.js"></script>
+        <script src="./codemirror-5.18.2/mode/javascript/javascript.js"></script>
+        <script src="./codemirror-5.18.2/mode/xml/xml.js"></script>
+        <script src="./codemirror-5.18.2/mode/htmlmixed/htmlmixed.js"></script>
+        <style type="text/css">
+        .CodeMirror {
+            height: 100vh;
+            font-family: Monaco, monospace;
+            font-size: 15px;
+        }
+        </style>
+    </head>
+    <body style = "margin:0; padding: 0">
+        <textarea id = "textarea" style = "width:100%; height: 100vh"></textarea>
+        <script>
+            window.editor = CodeMirror.fromTextArea(document.getElementById("textarea"), {
+                lineNumbers: true,
+                mode: "text/html"
+            });
+        </script>
+    </body>
+</html>
