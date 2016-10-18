@@ -20,6 +20,7 @@ module.exports =
         <click selector = "input[type=text]" />
         <type>How do I use <paste>JSX</paste>?</type>
         <click selector = "input[type=submit]" />
+        <wait.visible selector = ".results" />
     </using>
 
     <recording.stop />
