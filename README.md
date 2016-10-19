@@ -4,7 +4,7 @@
 
 ---
 
-DemoKit is a Library and Electron app for building product demos and tutorials using web technologies
+DemoKit is a Library and Electron app for macOS to build product demos and tutorials using web technologies
 
 * **Maintainable** Since DemoKit demos are just JavaScript modules, you can commit them
     to version control, diff them, collaborate with others, iterate and tweak to your heart's content, and
@@ -54,6 +54,7 @@ here: https://github.com/runkitdev/runkit-demo.
 ```
 npm install demokit -g
 ```
+> Note: DemoKit only works on macOS
 
 # Usage
 
