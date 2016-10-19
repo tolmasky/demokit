@@ -15,7 +15,7 @@
             ]
           },
           "xcode_settings": {
-            "MACOSX_DEPLOYMENT_TARGET": "10.8"
+            "MACOSX_DEPLOYMENT_TARGET": "10.9"
           },
         }]
       ]

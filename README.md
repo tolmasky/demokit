@@ -17,6 +17,8 @@ DemoKit is a Library and Electron app for building product demos and tutorials u
     to use for your demos. Browser windows that can load your site, terminal windows and code editor windows
     that can play supporting roles, and more. You can create and share custom components as well.
 
+Currently only macOS is supported, but you can help us change that!
+
 # Example
 
 ```jsx

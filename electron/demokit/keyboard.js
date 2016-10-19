@@ -6,11 +6,23 @@ const normalizedDelays = R.map(R.divide(R.__, averageDelay), sampleDelays);
 
 const { delay } = require("bluebird");
 const window = require("./window");
+const { base } = require("generic-jsx");
 
 const execute = require("demokit/execute");
 
-module.exports.paste = async function paste({ window, children:[text] })
+module.exports.paste = async function paste({ window, children })
 {
+    const text = children.reduce(function (text, child)
+    {
+        if (typeof child === "string")
+            return text + child;
+
+        if (base(child) === br)
+            return text + "\n";
+
+        throw new Error("Paste tags can only contain strings and break tags.");
+    }, "");
+
     await execute(
     {
         args: [{ id:window, text }],
@@ -67,7 +79,9 @@ module.exports.type = async function type({ window, children })
     }
 }
 
-module.exports.br = async function br({ window, pause = 0 })
+module.exports.br = br;
+
+async function br({ window, pause = 0 })
 {try {
     await insertText({ window, text: "\n" });
 
