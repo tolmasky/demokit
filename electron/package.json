@@ -5,10 +5,10 @@
   "main": "main.js",
   "scripts": {
     "start": "npm run-script build-with-abi && electron .",
-    "build-demokit": "cd demokit && npm install --runtime=electron --target=1.5.0 --disturl=https://atom.io/download/atom-shell --abi=50",
-    "build-electron": "npm install --runtime=electron --target=1.5.0 --disturl=https://atom.io/download/atom-shell --abi=50",
-    "build-with-abi": "npm run-script build-demokit && npm install --runtime=electron --target=1.5.0 --disturl=https://atom.io/download/atom-shell --abi=50",
-    "build-with-abi-good": "npm install --runtime=electron --target=1.5.0 --disturl=https://atom.io/download/atom-shell --abi=50 && cd demokit && npm install --runtime=electron --target=1.5.0 --disturl=https://atom.io/download/atom-shell --abi=50",
+    "build-demokit": "cd demokit && npm install --runtime=electron --target=1.5.0 --disturl=https://atom.io/download/atom-shell --abi=51",
+    "build-electron": "npm install --runtime=electron --target=1.5.0 --disturl=https://atom.io/download/atom-shell --abi=51",
+    "build-with-abi": "npm run-script build-demokit && npm install --runtime=electron --target=1.5.0 --disturl=https://atom.io/download/atom-shell --abi=51",
+    "build-with-abi-good": "npm install --runtime=electron --target=1.5.0 --disturl=https://atom.io/download/atom-shell --abi=51 && cd demokit && npm install --runtime=electron --target=1.5.0 --disturl=https://atom.io/download/atom-shell --abi=51",
     "build": "npm run-script build-with-abi",
     "deploy-old": "npm run-script build-with-abi && electron-packager . DemoKitApp --overwrite --platform=darwin --arch=x64"
   },
