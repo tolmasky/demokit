@@ -1,6 +1,6 @@
 {
   "name": "demokit",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "DemoKit is an Library and Electron app for building product demos and tutorials using web technologies",
   "main": "main.js",
   "bin": {
