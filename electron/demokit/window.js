@@ -110,7 +110,7 @@ async function getContentRect({ window, space })
 
 module.exports.style = async function({ id, origin, x, y, dx, opacity, width, height, scale, transformOrigin, animate = false })
 {
-    if (y === "center" || x === "center" || dx !== undefined)
+    if (y === "center" || x === "center" || y === "offscreen-top" || x === "offscreen-left" || y === "offscreen-bottom" || x === "offscreen-right" || dx !== undefined)
     {
         const contentRect = await getContentRect({ window: id,  space: Scene });
 
