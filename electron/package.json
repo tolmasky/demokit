@@ -37,6 +37,7 @@
     "screen-recorder": "pouwerkerk/screen-recorder",
     "uuid": "^2.0.2",
     "electron": "1.8.7",
+    "node-pty": "^0.7.6"
   },
   "devDependencies": {
     "electron-packager": "^8.0.0",
