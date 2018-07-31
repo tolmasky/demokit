@@ -12,7 +12,7 @@ __demokit.resolve = function (uuid, aResolution)
     send("execute-resolve", uuid, aResolution);
 }
 
-__demokit.reject = function (uuid, aRejection)
+__demokit.reject = function (uuid, anException)
 {
     if (anException instanceof Error)
         send("execute-reject", uuid, { message: anException.message, stack: anException.stack });
