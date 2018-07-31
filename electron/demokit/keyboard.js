@@ -52,15 +52,43 @@ async function key({ window, code })
         {
             const webview = document.querySelector("#" + id + " .window-content-webview");
 
+            // Taken from both https://github.com/electron/electron/blob/master/docs/api/accelerator.md
+            // and https://github.com/electron/electron/blob/master/docs/api/web-contents.md
+            const acceptableModifiers = {
+                Command: "meta",
+                Cmd: "meta",
+                Control: "control",
+                Ctrl: "ctrl",
+                Alt: "alt",
+                Option: "alt",
+                Shift: "shift",
+            }
+
+            let modifiers = [];
+            let keyCode = code;
+            if (code.length > 1) {
+                let split = code.split("+");
+                keyCode = split.pop();
+                split.map((s) => acceptableModifiers[s]).map((mod) => mod && modifiers.push(mod));
+            }
             webview.sendInputEvent(
             {
                 type: "keydown",
-                keyCode: code
+                keyCode: keyCode,
+                modifiers: modifiers,
             });
             webview.sendInputEvent(
             {
+                type: "char",
+                keyCode: keyCode,
+                modifiers: modifiers,
+            });
+
+            webview.sendInputEvent(
+            {
                 type: "keyup",
-                keyCode: code
+                keyCode: keyCode,
+                modifiers: modifiers,
             });
             resolve();
         }
@@ -105,7 +133,11 @@ async function insertText({ window, text, WPM = 160 })
 
             (function type(index)
             {
-                webview.insertText(text.charAt(index));
+                webview.sendInputEvent(
+                    {
+                        type: "char",
+                        keyCode: text.charAt(index)
+                    });
 
                 if (index === length - 1)
                     return resolve();
