@@ -48,8 +48,10 @@ function toOrFromWorkspace(props)
     {
         const { point, rect, selector, direction } = props;
 
-        if (rect)
-            return { origin: await toOrFromWorkspace({ point: rect.origin, selector, direction }), size: rect.size };
+        if (rect) {
+            const scale = direction === "from" ? (1 / (rect.devicePixelRatio || 1)) : rect.devicePixelRatio || 1;
+            return { origin: await toOrFromWorkspace({ point: { x: rect.origin.x * scale, y: rect.origin.y * scale }, selector, direction }), size: { width: rect.size.width * scale, height: rect.size.height * scale } };
+        }
 
         const { origin: { x: dx, y: dy } } = await getFrameInWorkspace({ selector });
         const mulitplier = direction === "from" ? -1 : 1;
