@@ -17,7 +17,7 @@ module.exports = async function window({ contentRect, template = DEFAULT_WINDOW_
     await execute(
     {
         args: [{ contentRect: await calculateContentRect({ contentRect }), ...rest }, PRELOAD_PATH, uuid.v4(), template],
-        script: function({ id, contentRect, contentURL, title }, PRELOAD_PATH, partition, template)
+            script: function ({ id, contentRect, contentURL, title, zoomLevel }, PRELOAD_PATH, partition, template)
         {
             const instantiation = document.getElementById("instantiation");
 
@@ -52,6 +52,9 @@ module.exports = async function window({ contentRect, template = DEFAULT_WINDOW_
 
             webview.addEventListener("dom-ready", function ()
             {
+                if (zoomLevel) {
+                    webview.setZoomLevel(zoomLevel);
+                }
                 webview.isDOMReady = true;
                 resolve(true);
             });
