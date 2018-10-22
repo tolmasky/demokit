@@ -240,17 +240,33 @@ module.exports.submit = async function submit({ id, form })
 
 module.exports.scroll = scroll;
 
-async function scroll({ window, selector, nth })
+async function scroll({ window, selector, nth, offset })
 {
     await execute(
     {
         window,
-        args:[{selector}],
-        script: function({ selector }, resolve, reject)
+        args:[{selector, offset}],
+        script: function({ selector, offset }, resolve, reject)
         {
             try {
             const anchor = document.querySelector(selector);
-            const options = { speed: 1000, easing: "easeOutCubic", callback: function () { resolve(true) } };
+            console.log("document.querySelector(" + selector + ") -> " + anchor);
+            const options = {
+                speed: 1000,
+                updateURL: false,
+                easing: "easeOutCubic",
+                offset: function(anchor, toggle) {
+                    return offset || 0;
+                }
+            };
+
+            function scrollDone(e) {
+                resolve(true);
+                document.removeEventListener('scrollStop', scrollDone, false);
+                document.removeEventListener('scrollCancel', scrollDone, false);
+            } 
+            document.addEventListener('scrollStop', scrollDone, false);
+            document.addEventListener('scrollCancel', scrollDone, false);
 
             __demokit.smoothScroll.animateScroll( anchor, null, options ); } catch(e) { alert("ddd" + e) }
         }
