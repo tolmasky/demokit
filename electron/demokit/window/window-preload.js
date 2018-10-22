@@ -5,7 +5,8 @@ const send = ipcRenderer.send.bind(ipcRenderer);
 
 global.__demokit = { };
 
-__demokit.smoothScroll = require("./vendor/smooth-scroll.min.js");
+const SmoothScroll = require("./vendor/smooth-scroll.min.js")
+__demokit.smoothScroll = new SmoothScroll();
 
 __demokit.resolve = function (uuid, aResolution)
 {
@@ -19,8 +20,6 @@ __demokit.reject = function (uuid, anException)
     else
         send("execute-reject", uuid, anException);
 }
-
-__demokit.smoothScroll.init();
 
 }
 catch(e) { alert("yikes"); alert(e); }
