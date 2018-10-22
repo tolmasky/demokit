@@ -90,6 +90,9 @@ NSCursor * platformCursorForCSSCursor(const char * aName)
     if (strncmp("default", aName, 7) == 0)
         return [NSCursor arrowCursor];
 
+    if (strncmp("pointer", aName, 7) == 0)
+        return [NSCursor pointingHandCursor];
+
     return nil;
 }
 
