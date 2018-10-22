@@ -19,7 +19,7 @@ module.exports = async function window({ contentRect, template = DEFAULT_WINDOW_
         args: [{ contentRect: await calculateContentRect({ contentRect }), ...rest }, PRELOAD_PATH, uuid.v4(), template],
         script: function({ id, contentRect, contentURL, title }, PRELOAD_PATH, partition, template)
         {
-            const instantiation = document.getElementById("instantiation");
+            const instantiation = document.createElement("div");
 
             instantiation.innerHTML = template;
 
