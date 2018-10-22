@@ -106,8 +106,9 @@ void PerformClick(const Nan::FunctionCallbackInfo<v8::Value>& info)
             return;
         }
         
-        int x = info[0]->ToNumber()->Int32Value();
-        int y = info[1]->ToNumber()->Int32Value();
+        v8::Isolate* isolate = info.GetIsolate();
+        int x = info[0]->ToNumber(isolate)->Int32Value();
+        int y = info[1]->ToNumber(isolate)->Int32Value();
         
         NSWindow * window = [NSApp windows][0];
         int windowNumber = window.windowNumber;
