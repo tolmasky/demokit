@@ -18,7 +18,7 @@ exports.getBoundingClientRect = async function ({ window, selector, nth, space =
                         document.querySelectorAll(selector)[nth].getBoundingClientRect() :
                         document.querySelector(selector).getBoundingClientRect();
 
-            resolve({ origin: { x: rect.left, y: rect.top }, size: { width: rect.width, height: rect.height } });
+            resolve({ origin: { x: rect.left, y: rect.top }, size: { width: rect.width, height: rect.height }, devicePixelRatio: window.devicePixelRatio });
         }
     });
 

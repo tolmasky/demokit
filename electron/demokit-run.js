@@ -110,10 +110,12 @@ function execute({ send, script, args = [] })
 {
     const key = uuid.v4();
 
-    return new Promise(function (resolve, reject)
-    {
-        executions[key] = { resolve, reject };
-
-        send("execute", key, `(${script})`, args);
+    return new Promise(function (resolve, reject) {
+        try {
+            send("execute", key, `(${script})`, args);
+            executions[key] = { resolve, reject };
+        } catch (e) {
+            reject(e);
+        }
     });
 }

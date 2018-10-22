@@ -17,7 +17,7 @@ module.exports = async function window({ contentRect, template = DEFAULT_WINDOW_
     await execute(
     {
         args: [{ contentRect: await calculateContentRect({ contentRect }), ...rest }, PRELOAD_PATH, uuid.v4(), template],
-        script: function({ id, contentRect, contentURL, title }, PRELOAD_PATH, partition, template)
+            script: function ({ id, contentRect, contentURL, title, zoomLevel }, PRELOAD_PATH, partition, template)
         {
             const instantiation = document.getElementById("instantiation");
 
@@ -52,6 +52,9 @@ module.exports = async function window({ contentRect, template = DEFAULT_WINDOW_
 
             webview.addEventListener("dom-ready", function ()
             {
+                if (zoomLevel) {
+                    webview.setZoomLevel(zoomLevel);
+                }
                 webview.isDOMReady = true;
                 resolve(true);
             });
@@ -104,7 +107,7 @@ async function getContentRect({ window, space })
 
 module.exports.style = async function({ id, origin, x, y, dx, opacity, width, height, scale, transformOrigin, animate = false })
 {
-    if (y === "center" || x === "center" || dx !== undefined)
+    if (y === "center" || x === "center" || y === "offscreen-top" || x === "offscreen-left" || y === "offscreen-bottom" || x === "offscreen-right" || dx !== undefined)
     {
         const contentRect = await getContentRect({ window: id,  space: Scene });
 
