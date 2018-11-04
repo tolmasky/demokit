@@ -96,56 +96,9 @@ NSCursor * platformCursorForCSSCursor(const char * aName)
     return nil;
 }
 
-void PerformClick(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-    @autoreleasepool
-    {
-        if (info.Length() < 2)
-        {
-            Nan::ThrowTypeError("Wrong number of arguments");
-            return;
-        }
-        
-        v8::Isolate* isolate = info.GetIsolate();
-        int x = info[0]->ToNumber(isolate)->Int32Value();
-        int y = info[1]->ToNumber(isolate)->Int32Value();
-        
-        NSWindow * window = [NSApp windows][0];
-        int windowNumber = window.windowNumber;
-        NSView * contentView = window.contentView;
-        NSPoint contentPoint = NSMakePoint(x, NSHeight(contentView.frame) - y);
-        NSPoint windowPoint = [contentView convertPoint:contentPoint toView:nil];
-        NSEvent * mouseDown = [NSEvent mouseEventWithType:NSLeftMouseDown
-                       location:windowPoint
-                  modifierFlags:0
-                      timestamp:[[NSDate date] timeIntervalSince1970] 
-                   windowNumber:windowNumber
-                        context:nil
-                    eventNumber:0
-                     clickCount:1
-                       pressure:0];
-
-        [NSApp sendEvent:mouseDown];
-    
-        NSEvent * mouseUp = [NSEvent mouseEventWithType:NSLeftMouseUp
-                       location:windowPoint
-                  modifierFlags:0
-                      timestamp:[[NSDate date] timeIntervalSince1970] 
-                   windowNumber:windowNumber
-                        context:nil
-                    eventNumber:0
-                     clickCount:1
-                       pressure:0];
-                       
-        [NSApp sendEvent:mouseUp];
-    }
-}
-
 void Init(v8::Local<v8::Object> exports) {
   exports->Set(Nan::New("getCursor").ToLocalChecked(),
                Nan::New<v8::FunctionTemplate>(GetCursor)->GetFunction());
-  exports->Set(Nan::New("performClick").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(PerformClick)->GetFunction());
 }
 
 NODE_MODULE(mouse, Init);

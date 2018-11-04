@@ -3,12 +3,12 @@ const execute = require("demokit/execute");
 const { wait } = require("./demokit");
 const { Workspace, Scene, convert } = require("./coordinate-space");
 const { getCenterRect, getBoundingClientRect } = require("./geometry");
-const { getCursor, performClick } = require("bindings")("mouse");
+const { getCursor } = require("bindings")("mouse");
 
 
-exports.click = async function ({ move = true, effect = true, window, selector, nth, x, y, dx = 0, dy = 0, reveal = false, space = Scene })
+exports.click = async function ({ move = true, effect = true, window, selector, nth, x, y, dx = 0, dy = 0,  count = 1, reveal = false, space = Scene })
 {
-    await moveAndClick({ move, effect, click: true, window, selector, nth, x, y, dx, dy, space });
+    await moveAndClick({ move, effect, click: count, window, selector, nth, x, y, dx, dy, space });
 
     if (reveal)
     {
@@ -29,22 +29,105 @@ exports.effect = async function ({ window, selector, nth, x, y, dx = 0, dy = 0, 
     await moveAndClick({ move: false, effect: true, click: false, window, selector, nth, x, y, dx, dy, space });
 }
 
-async function moveAndClick({ move, click, effect, window, selector, nth, x, y, dx, dy, space })
+let PREVIOUS_MOVE = undefined;
+
+async function moveAndClick({ move, click, effect, window, selector, fraction, nth, x, y, dx, dy, space })
 {
     if (selector)
         await wait.visible({ window, selector, nth });
 
+    const positionWithinWindow = selector ?
+        getCenterRect({ rect: await getBoundingClientRect({ window, selector, nth, space: window }) }) :
+        {x: x, y: y};
     const position = await getWorkspaceMousePosition({ window, selector, nth, x, y, space });
-    const adjusted = { x: position.x + dx, y: position.y + dy };
+    let adjusted = { x: position.x + dx, y: position.y + dy };
+    let adjustedWithinWindow = { x: positionWithinWindow.x + dx, y: positionWithinWindow.y + dy };
 
-    if (move)
+    if (move) {
+        if (PREVIOUS_MOVE && PREVIOUS_MOVE.id !== window) {
+            await sendInputEvents({
+                window: PREVIOUS_MOVE.id,
+                events: [
+                    {
+                        type: "mouseLeave",
+                        x: PREVIOUS_MOVE.x,
+                        y: PREVIOUS_MOVE.y,
+                    },
+                ]
+            });
+        }
+        PREVIOUS_MOVE = { id: window, x: Math.round(adjustedWithinWindow.x), y: Math.round(adjustedWithinWindow.y) };
+            
         await moveSmooth({ destination: adjusted });
+
+        await sendInputEvents({
+            window,
+            events: [
+                {
+                    type: "mouseEnter",
+                    x: Math.round(adjustedWithinWindow.x), y: Math.round(adjustedWithinWindow.y)
+                },
+                {
+                    type: "mouseMove",
+                    x: Math.round(adjustedWithinWindow.x), y: Math.round(adjustedWithinWindow.y)
+                },
+            ]
+        });
+    }
 
     if (effect)
         await showClickEffect({ point: adjusted, space: Workspace });
 
-    if (click)
-        performClick(adjusted.x, adjusted.y);
+    if (click) {
+        const clickCount = click === true ? 1 : click;
+        await sendInputEvents({
+            window,
+            events: [
+                {
+                    type: "mouseDown",
+                    clickCount: clickCount,
+                    button: 'left',
+                    x: Math.round(adjustedWithinWindow.x), y: Math.round(adjustedWithinWindow.y)
+                },
+                {
+                    type: "mouseUp",
+                    clickCount: clickCount,
+                    button: 'left',
+                    x: Math.round(adjustedWithinWindow.x), y: Math.round(adjustedWithinWindow.y)
+                }
+            ]
+        });
+    }
+
+    async function sendInputEvents({window, events, delay = 50}) {
+        await execute(
+            {
+                args: [{ id: window, events, delay }],
+                script: function ({ id, events, delay }, resolve, reject) {
+                    const webview = document.querySelector("#" + id + " .window-content-webview");
+                    const webcontents = webview.getWebContents()
+
+                    const step = (ix) => {
+                        if (ix >= events.length) {
+                            resolve()
+                            return
+                        }
+
+                        if (!webcontents.isFocused()) {
+                            console.log(`[${id}] was not focused. focusing...`)
+                            webcontents.focus()
+                            setTimeout(step, 100, ix);
+                            return
+                        }
+
+                        const event = events[ix];
+                        webcontents.sendInputEvent(event)
+                        setTimeout(step, delay, ix + 1)
+                    }
+                    step(0)
+                }
+            });
+    }
 }
 
 exports.hide = async function ()
