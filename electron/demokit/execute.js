@@ -34,6 +34,8 @@ async function windowExecute({ window, script, args = [] })
 
                 function run(uuid, aFunction, args, script)
                 {
+                    __demokit.pending(uuid);
+
                     new Promise(function (resolve, reject)
                         {
                             aFunction.apply(this, args.concat(resolve, reject));
