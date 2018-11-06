@@ -5,10 +5,10 @@
   "main": "main.js",
   "scripts": {
     "start": "npm run-script build-with-abi && electron .",
-    "build-demokit": "cd demokit && npm install --runtime=electron --target=1.6.11 --disturl=https://atom.io/download/atom-shell --abi=53",
-    "build-electron": "npm install --runtime=electron --target=1.6.11 --disturl=https://atom.io/download/atom-shell --abi=53",
-    "build-with-abi": "npm run-script build-demokit && npm install --runtime=electron --target=1.6.11 --disturl=https://atom.io/download/atom-shell --abi=53",
-    "build-with-abi-good": "npm install --runtime=electron --target=1.6.11 --disturl=https://atom.io/download/atom-shell --abi=53 && cd demokit && npm install --runtime=electron --target=1.6.11 --disturl=https://atom.io/download/atom-shell --abi=53",
+    "build-demokit": "cd demokit && npm install --runtime=electron --target=3.0.3 --disturl=https://atom.io/download/atom-shell --abi=66",
+    "build-electron": "npm install --runtime=electron --target=3.0.3 --disturl=https://atom.io/download/atom-shell --abi=66",
+    "build-with-abi": "npm run-script build-demokit && npm install --runtime=electron --target=3.0.3 --disturl=https://atom.io/download/atom-shell --abi=66",
+    "build-with-abi-good": "npm install --runtime=electron --target=3.0.3 --disturl=https://atom.io/download/atom-shell --abi=66 && cd demokit && npm install --runtime=electron --target=3.0.3 --disturl=https://atom.io/download/atom-shell --abi=66",
     "build": "npm run-script build-with-abi",
     "deploy-old": "npm run-script build-with-abi && electron-packager . DemoKitApp --overwrite --platform=darwin --arch=x64"
   },
@@ -30,16 +30,17 @@
     "babel-preset-stage-3": "^6.11.0",
     "babel-register": "^6.14.0",
     "bluebird": "^3.4.6",
+    "electron": "3.0.3",
     "expand-tilde": "^1.2.2",
     "generic-jsx": "9.0.0",
     "moment": "^2.14.1",
+    "nan": "^2.11.1",
     "ramda": "^0.22.1",
     "screen-recorder": "pouwerkerk/screen-recorder",
-    "uuid": "^2.0.2",
-    "electron": "1.6.11"
+    "uuid": "^2.0.2"
   },
   "devDependencies": {
     "electron-packager": "^8.0.0",
-    "electron-rebuild": "^1.2.1"
+    "electron-rebuild": "^1.8.2"
   }
 }

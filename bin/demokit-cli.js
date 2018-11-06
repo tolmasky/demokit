@@ -19,7 +19,7 @@ if (process.argv[2] === "new")
 }
 else
 {
-    var electronPath = path.join(__dirname, "..", "electron", "node_modules", "electron");
+    var electronPath = path.join(__dirname, "..", "electron", "node_modules", "electron", "dist");
     var electronExecutablePath = path.join(electronPath, fs.readFileSync(path.join(electronPath, "path.txt"), "utf-8"));
 
     spawn(electronExecutablePath, [path.join(__dirname, "..", "electron")].concat(process.argv.slice(2)), {stdio: "inherit"});
