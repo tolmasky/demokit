@@ -1,6 +1,6 @@
 {
   "name": "demokit",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "DemoKit is an Library and Electron app for building product demos and tutorials using web technologies",
   "main": "main.js",
   "bin": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/runkitdev/demokit"
+    "url": "git+https://github.com/runkit-open-source/demokit"
   },
   "keywords": ["video", "demos", "tutorials", "authoring"],
   "author": "RunKit",
@@ -29,9 +29,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/runkitdev/demokit/issues"
+    "url": "https://github.com/runkit-open-source/demokit/issues"
   },
-  "homepage": "https://github.com/runkitdev/demokit#readme",
+  "homepage": "https://github.com/runkit-open-source/demokit#readme",
   "dependencies": {
   }
 }
