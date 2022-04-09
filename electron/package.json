@@ -33,7 +33,7 @@
     "electron": "3.0.3",
     "expand-tilde": "^1.2.2",
     "generic-jsx": "9.0.0",
-    "moment": "^2.14.1",
+    "moment": "^2.29.2",
     "nan": "^2.11.1",
     "ramda": "^0.22.1",
     "screen-recorder": "pouwerkerk/screen-recorder",
