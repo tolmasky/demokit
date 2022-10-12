@@ -40,7 +40,7 @@
     "uuid": "^2.0.2"
   },
   "devDependencies": {
-    "electron-packager": "^8.0.0",
+    "electron-packager": "^16.0.0",
     "electron-rebuild": "^1.8.2"
   }
 }
